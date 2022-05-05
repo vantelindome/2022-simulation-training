@@ -8,11 +8,11 @@ plt.rcParams["text.usetex"] =True
 fig = plt.figure(figsize=(18,8))
 
 dt=[0.0001,0.0010,0.0100,0.1000]
-symbol =['o-','D-','x-','>-']
+symbol =['o-','D-','x-','>-']  # plotの種類
 
 for j in range (1,4): 
     plt.subplot("13{}".format(j))
-    ax1 = fig.add_subplot("13{}".format(j)) 
+    ax1 = fig.add_subplot("13{}".format(j)) # {}.format(j) で、{}内にjの値が入る
     if(j>1):
         plt.yscale('log')
 
