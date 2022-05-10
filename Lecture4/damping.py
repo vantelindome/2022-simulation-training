@@ -7,7 +7,7 @@ def damp(dt):
     v=10. 
     i=0 
     out=1.
-    f = open("damp_dt_{:.4f}.dat".format(dt), 'w')
+    f = open("damp_dt_{:.4f}.dat".format(dt), 'w') # .4:小数点4桁、f:float
     while v> sys.float_info.epsilon: 
         # numerical epsilon wherein  the "float" corresponds to the double in C 
         v -= v*dt

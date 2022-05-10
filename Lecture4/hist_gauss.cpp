@@ -10,7 +10,7 @@
 #define hsize 1200
 //using namespace std;
 
-int histogram(double bin,double *array,double *hist){
+int histogram(double bin,double *array,double *hist){ //*array: address
   int i;
   char filename[128];
   std::ofstream file;
