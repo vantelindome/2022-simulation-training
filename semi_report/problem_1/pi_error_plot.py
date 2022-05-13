@@ -10,12 +10,13 @@ fig = plt.figure()
 
 data = np.genfromtxt('buffon.txt')
 
-plt.plot((data[:,0], data[:,1]))
-plt.set_title("Calculate pi using Buffon's pin")
+plt.plot((data[:,0], data[:,2]))
+plt.set_title('Relation between absolute error of pi and ')
 plt.xscale('log')
+plt.yscale('log')
 plt.xlabel('number of dropping pins')
-plt.ylabel('measured Pi')
+plt.ylabel('absolute error')
 
-plt.savefig('problem1-2.png')
-plt.savefig('problem1-2.pdf')
+plt.savefig('problem1-3.png')
+plt.savefig('problem1-3.pdf')
 plt.show()
