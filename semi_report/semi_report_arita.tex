@@ -1,0 +1,69 @@
+\documentclass[a4paper]{jarticle}
+\usepackage{amsmath}
+\usepackage{titlesec}
+\titleformat*{\section}{\large\bfseries}
+\titleformat*{\subsection}{\normalsize\bfseries}
+
+\renewcommand{\thesection}{問題\arabic{section}}
+\renewcommand{\thesubsection}{(\arabic{subsection})}
+
+
+\begin{document}
+
+\title{シミュレーション実習 中間レポート}
+\author{262201018 在田 陽一}
+\date{2022/05/11}
+\maketitle
+
+
+% 問題1
+\section{}
+% (1)
+\subsection{}
+\noindent
+条件より,棒の下半分が$y$軸と交わるためには,
+\begin{equation}
+     y_s \leq \frac{l}{2}\sin\theta \tag{1.1}
+\end{equation}
+であればよい。
+
+\noindent
+$0 \leq \theta \leq \frac{\pi}{2}$, $0 \leq y_s \leq \frac{d}{2}$ より,
+この範囲において図1.1において$\theta$と$y_s$がなす点が境界を含む斜線部の範囲内に含まれる確率を求めればよい.
+
+\noindent
+よって確率$p$は,
+\begin{equation}
+    p \sim \frac{\int^\frac{\pi}{2}_0 \frac{l}{2}\sin \theta}{\frac{\pi}{2} \cdot \frac{d}{2}} \\
+     =\frac{2l}{\pi d} \tag{1.2}
+\end{equation}
+となる.
+
+\subsection{}
+\noindent
+1.2式より,
+\begin{equation}
+   \pi \sim  \frac{2l}{pd} \tag{1.3}
+\end{equation}
+と表せるので, $y_s$と$\theta$を乱数生成させることで1.1式と比較し,
+それをもとに1.3式によって$\pi$を実測する.
+
+\section{}
+\subsection{}
+\noindent
+式(1)は定数係数の二階微分方程式より,$x=e^{\lambda x}$とおいて整理すると
+\begin{equation}
+    m\lambda^2 + \zeta\lambda + k = 0 \tag{2.1}
+\end{equation}
+という特性方程式2.1を得る.この解は
+\begin{equation}
+    \lambda = \frac{-\zeta + \sqrt{\zeta^2 - 4mk}}{2} \tag{2.2}
+\end{equation}
+であり,
+
+\subsection{}
+\noindent
+\subsection{}
+\noindent
+\subsection{}\noindent
+\end{document}
