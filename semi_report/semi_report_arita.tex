@@ -24,11 +24,11 @@
 \subsection{}
 \noindent
 
-条件より,棒の下半分が$y$軸と交わるためには,
+条件より, 棒の下半分が$y$軸と交わるためには
 \begin{equation}
      y_s \leq \frac{l}{2}\sin\theta \tag{1.1}
 \end{equation}
-であればよい。
+であればよい.
 
 \noindent
 $0 \leq \theta \leq \frac{\pi}{2}$, $0 \leq y_s \leq \frac{d}{2}$ より,
@@ -51,13 +51,34 @@ $0 \leq \theta \leq \frac{\pi}{2}$, $0 \leq y_s \leq \frac{d}{2}$ より,
    \pi \sim  \frac{2l}{pd} \tag{1.3}
 \end{equation}
 と表せるので, $y_s$と$\theta$を乱数生成させることで式(1.1)と比較し,
-それをもとに(1.3)式によって$\pi$を実測する.
+それをもとに式(1.3)によって$\pi$を実測する.
 
 \noindent
-プログラムの実行手順としては,まずデータをbuffon.pyによって出力し,
-それをproblem1.ipynbによって出力した.
+プログラムの実行手順としては, まずデータをbuffon.pyによって出力し,
+それをproblem1.ipynbによって出力した. 
+落とした棒の本数と実測した$\pi$の値の関係を図1に示す. なお, $\pi$の理論値を赤線で重ね合わせた.
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.6]{./problem_1/problem1-2.pdf}
+    \caption{Buffonの針による円周率の数値的見積もり}
+\end{figure}
 
 % (3)
+\subsection{}
+\noindent
+(2)で実測した$\pi$の値と理論値の差の誤差を, 絶対値として示す. 
+プログラムの実行手順としては, まずデータをbuffon.pyによって出力し,
+それをproblem1.ipynbによって出力した.
+誤差の絶対値と落とした棒の本数の関係を図2に示す.
+ここで,$\frac{C}{\sqrt{n}}$を, $C=3.0$として重ね合わせた.
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.6]{./problem_1/problem1-3.pdf}
+    \caption{数値的の見積もった円周率の絶対誤差}
+\end{figure}
+
+\newpage
+
 
 % 問題2
 \section{}
@@ -65,7 +86,7 @@ $0 \leq \theta \leq \frac{\pi}{2}$, $0 \leq y_s \leq \frac{d}{2}$ より,
 \subsection{}
 
 \noindent
-式(1)は定数係数の二階微分方程式より,$x=e^{\lambda x}$とおいて整理すると
+式(1)は定数係数の二階微分方程式より, $x=e^{\lambda x}$とおいて整理すると
 \begin{equation}
     m\lambda^2 + \zeta\lambda + k = 0 \tag{2.1}
 \end{equation}
@@ -74,7 +95,7 @@ $0 \leq \theta \leq \frac{\pi}{2}$, $0 \leq y_s \leq \frac{d}{2}$ より,
 \begin{equation}
     \lambda = \frac{-\zeta + \sqrt{\zeta^2 - 4mk}}{2} \tag{2.2}
 \end{equation}
-であり, ルートの中身について場合分けすると,減衰振動,過減衰,臨界減衰を示す条件はそれぞれ
+であり, ルートの中身について場合分けすると, 減衰振動, 過減衰, 臨界減衰を示す条件はそれぞれ
 
 \begin{align*}
     \zeta & > \sqrt{4mk}　　 (減衰振動) \tag{2.3}\\
@@ -99,7 +120,7 @@ $0 \leq \theta \leq \frac{\pi}{2}$, $0 \leq y_s \leq \frac{d}{2}$ より,
     \frac{d \tilde{v}(\tilde{t})}{dt} &= \frac{d \tilde{v}(\tilde{t})}{d \tilde{t}} \cdot \frac{d \tilde{t}}{dt} \\
     &= \frac{1}{t_0} \frac{d \tilde{v}(\tilde{t})}{d \tilde{t}} \tag{2.7}
 \end{align*}
-より,式(2.6)は
+より, 式(2.6)は
 
 \begin{equation}
     \frac{m}{t_0^2} \frac{d \tilde{v}(\tilde{t})}{d \tilde{t}} = - \frac{\zeta}{t_0} \tilde{v}(\tilde{t})
@@ -177,14 +198,14 @@ $0 \leq \theta \leq \frac{\pi}{2}$, $0 \leq y_s \leq \frac{d}{2}$ より,
     \end{align}
 \end{subequations}
 となる.
-また,$t_d = \frac{m}{\zeta}$, $t_s = \sqrt{\frac{m}{k}}$, $t_s=t_0$を式(2.3)-(2.5)に代入することで
+また, $t_d = \frac{m}{\zeta}$, $t_s = \sqrt{\frac{m}{k}}$, $t_s=t_0$を式(2.3)-(2.5)に代入することで
 $\frac{t_0}{t_d}=T$とおいたとき
 \begin{align*}
     T & < 2　　 (減衰振動) \tag{2.3}\\
     T & > 2　　 (過減衰) \tag{2.4}\\
     T & = 2　　 (臨界減衰) \tag{2.5}\\
 \end{align*}
-となるので,$T=0, 1, 2, 3, 4$のときの$x(t)$を図2.1にプロットした.
+となるので, $T=0, 1, 2, 3, 4$のときの$x(t)$を図2.1にプロットした.
 各$T$における$t$と$x(t)$の関係をproblem2.pyを用いて出力し, それらをproblem2.ipynb
 によって1つの図にプロットした. 
 ここで, $\Delta t=0.01$, $\frac{a}{t_0}=0.1$として計算し, $t$の範囲は(0,500)とした. 
@@ -194,5 +215,12 @@ $\frac{t_0}{t_d}=T$とおいたとき
     \includegraphics[scale=0.6]{./problem_2/problem2.pdf}
     \caption{調和振動子のふるまい}
 \end{figure}
-\clearpage
+
+\newpage
+※添付ファイル
+・buffon.py
+・ploblem2.py
+・ploblem1.ipynb
+・ploblem2.ipynb
+
 \end{document}
