@@ -10,7 +10,7 @@
 #define dim 2
 
 void ini_square(double (*x)[dim]){
-  int num_x = (int)sqrt(Np)+1;
+  int num_x = (int)sqrt(Np)+1;  //　x,y方向におく粒子の数
   int num_y = (int)sqrt(Np)+1;
   int i,j,k=0;
   for(j=0;j<num_y;j++){
@@ -61,7 +61,7 @@ void output(double (*x1)[dim],double (*x2)[dim]){
 }
 
 int main(){
-  double  (*x1)[dim] = new double[Np][dim];
+  double  (*x1)[dim] = new double[Np][dim]; // dim: dimension
   double  (*x2)[dim] = new double[Np][dim];
   ini_square(x1);
   ini_hex(x2);
