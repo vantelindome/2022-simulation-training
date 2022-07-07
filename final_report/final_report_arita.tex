@@ -22,6 +22,7 @@
 
 % 問題1
 \section{}
+
 % (1)
 \subsection{}
 
@@ -40,21 +41,21 @@
 
 \begin{equation}
     m \frac{a}{t_0^2} \bm{\dot{\tilde{v}}} = -\zeta \frac{a}{t_0} \bm{\tilde{v}} 
-    + \sqrt{\frac{2k_BT \zeta}{t_0 \Delta t}}\bm{R}_G \tag{1.2}
+    + \sqrt{\frac{2k_BT \zeta}{t_0 \Delta \tilde{t}}}\bm{R}_G \tag{1.2}
 \end{equation}
 
 \noindent
 式(1.2)に $t_D=\frac{m}{\zeta}$, $t_B=\frac{a^2 \zeta}{k_BT}$ を代入すると
 
 \begin{equation}
-    \frac{\zeta at_D}{t_0^2} \bm{\dot{\tilde{v}}} = -\frac{\zeta a}{t_0} \bm{\tilde{v}} 
-    + \sqrt{\frac{2\zeta ^2a^2}{t_Bt_0 \Delta t}}\bm{R}_G \tag{1.3} 
+    \frac{a\zeta t_D}{t_0^2} \bm{\dot{\tilde{v}}} = -\frac{a\zeta}{t_0} \bm{\tilde{v}} 
+    + \sqrt{\frac{2a^2\zeta ^2}{t_Bt_0 \Delta \tilde{t}}}\bm{R}_G \tag{1.3} 
 \end{equation}
 両辺に $\frac{t_0}{\zeta a}$ をかけると
 
 \begin{equation}
     \frac{t_D}{t_0} \bm{\dot{\tilde{v}}} = \bm{\tilde{v}} 
-    + \sqrt{\frac{2t_0}{t_B\Delta t}}\bm{R}_G \tag{1.4} 
+    + \sqrt{\frac{2t_0}{t_B\Delta \tilde{t}}}\bm{R}_G \tag{1.4} 
 \end{equation}
 となり, 題意に適する.
 
@@ -67,7 +68,7 @@
 
 \begin{equation}
     \frac{t_D}{t_0} \bm{\dot{\tilde{v}}} = \bm{\tilde{v}} 
-    + \sqrt{\frac{2}{\Delta t}}\bm{R}_G \tag{1.5} 
+    + \sqrt{\frac{2}{\Delta \tilde{t}}}\bm{R}_G \tag{1.5} 
 \end{equation}
 
 \noindent
@@ -81,7 +82,7 @@
 
 \begin{equation}
     m^* \bm{\dot{\tilde{v}}} = \bm{\tilde{v}} 
-    + \sqrt{\frac{2}{\Delta t}}\bm{R}_G \tag{1.7} 
+    + \sqrt{\frac{2}{\Delta \tilde{t}}}\bm{R}_G \tag{1.7} 
 \end{equation}
 となり, 題意に適する.
 
@@ -118,8 +119,42 @@
 
 % (4)
 \subsection{}
+\noindent
+式(1.7)をオイラー・丸山法を用いて離散化する.
+左辺に, オイラー法を用いて展開した式
+
+\begin{equation}
+    \bm{\dot{\tilde{v}}}(\tilde{t}) 
+    = \frac{\bm{\tilde{v}}(\tilde{t}+\Delta \tilde{t})-\bm{\tilde{v}}(\tilde{t})}{\Delta \tilde{t}}
+    \tag{1.11}
+\end{equation}
+を代入すると
+
+\begin{equation}
+    m^* \frac{\bm{\tilde{v}}(\tilde{t}+\Delta \tilde{t})-\bm{\tilde{v}}(\tilde{t})}{\Delta \tilde{t}}
+    = \bm{\tilde{v}}(\tilde{t}) + \sqrt{\frac{2}{\Delta \tilde{t}}}\bm{R}_G \tag{1.12}
+\end{equation}
+これを整理すると
+
+\begin{equation}    
+    \bm{\tilde{v}}(\tilde{t}+\Delta \tilde{t}) = \qty(1-\frac{\Delta \tilde{t}}{m^*})\bm{\tilde{v}}(\tilde{t})
+    + \frac{1}{m^*}\sqrt{2\Delta \tilde{t}}\bm{R}_G  \tag{1.13}
+\end{equation}
+またこれより
+
+\begin{align*}
+    \bm{r}(\tilde{t}+\Delta \tilde{t}) &= \bm{r}(\tilde{t}) + \bm{\tilde{v}}(\tilde{t}+\Delta \tilde{t})\Delta \tilde{t} \\
+    &= \bm{r}(\tilde{t}) + \qty(1-\frac{\Delta \tilde{t}}{m^*})\bm{\tilde{v}}(\tilde{t})\Delta \tilde{t}
+    + \frac{1}{m^*}\sqrt{2\Delta \tilde{t}}\Delta \tilde{t}\bm{R}_G \tag{1.14}
+\end{align*}
+となる.
 
 \noindent
+これを用いて, 初期条件$\bm{r}=(0,0)$, $\bm{v}=(0.0)$, 時間区間$\qty[0, 100t_B]$, 時間刻み$\Delta \tilde{t}=0.01t_B$における粒子軌跡を作図した.
+その結果を
+
+
+
 % (5)
 \subsection{}
 
