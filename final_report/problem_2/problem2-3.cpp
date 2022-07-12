@@ -8,25 +8,22 @@
 
 #define Np 1000
 #define L 50.0
-#define tmax 10
+#define tmax 1500
 #define dt 0.01
-#define temp 5.0
+#define temp 0.2
 #define dim 2
 #define cut 2.0
 #define polydispersity 0.0
 
-void ini_coord_square(double (*x)[dim]){
-  int num_x = (int)sqrt(Np)+1;
-  int num_y = (int)sqrt(Np)+1;
-  int i,j,k=0;
-  for(j=0;j<num_y;j++)
-    for(i=0;i<num_x;i++){
-      x[i+num_x*j][0] = i*L/(double)num_x;
-      x[i+num_x*j][1] = j*L/(double)num_y;
-      k++;
-      if(k==Np)
-        break;
-    }
+void input(double (*x)[dim], double (*a)){
+  char filename[128];
+  std::ifstream file;
+  sprintf(filename,"2-2/coord_T5.000_1_problem2-2.dat");
+  file.open(filename);
+  for(int k=0;k<Np;k++)
+    file >> x[k][0] >> x[k][1] >> a[k];
+  file.close();
+  
 }
 
 void set_diameter(double *a){
@@ -93,7 +90,7 @@ void output(double (*x)[dim],double *a){
   char filename[128];
   std::ofstream file;
   static int j=0;
-  sprintf(filename,"./2-2/coord_T%.3f_%d_problem2-2.dat",temp,j);
+  sprintf(filename,"./2-3/coord_T%.3f_%d_problem2-3.dat",temp,j);
   file.open(filename);
   for(int i=0;i<Np;i++)
     file <<x[i][0]<<"\t"<<x[i][1]<<"\t"<<a[i]<<std::endl;
@@ -105,11 +102,11 @@ int main(){
   double x[Np][dim],v[Np][dim],f[Np][dim],a[Np];
   double tout=0.0;
   int j=0;
-  set_diameter(a);
-  ini_coord_square(x);
+  // set_diameter(a);
+  input(x,a);
   ini_array(v);
 
-  while(j*dt < 10.0){
+  while(j*dt < 100.0){
     j++;
     calc_force(x,f,a);
     eom(v,x,f,5.0);
@@ -122,7 +119,7 @@ int main(){
     p_boundary(x);
     if(j*dt >= tout){
       output(x,a);
-      tout+=10.;
+      tout+=100.;
     }
   }
   return 0;
