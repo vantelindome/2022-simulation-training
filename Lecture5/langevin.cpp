@@ -6,7 +6,7 @@
 #include <cfloat>
 #include "BM.h"
 
-#define tmax 10
+#define tmax 100
 #define dt 0.01
 #define temp 1.0
 #define ensemble 10000
