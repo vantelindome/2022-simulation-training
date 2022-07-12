@@ -54,7 +54,7 @@
 両辺に $\frac{t_0}{\zeta a}$ をかけると
 
 \begin{equation}
-    \frac{t_D}{t_0} \bm{\dot{\tilde{v}}} = \bm{\tilde{v}} 
+    \frac{t_D}{t_0} \bm{\dot{\tilde{v}}} = -\bm{\tilde{v}} 
     + \sqrt{\frac{2t_0}{t_B\Delta \tilde{t}}}\bm{R}_G \tag{1.4} 
 \end{equation}
 となり, 題意に適する.
@@ -67,7 +67,7 @@
 式(1.4)について, $t_0=t_B$ とすると
 
 \begin{equation}
-    \frac{t_D}{t_0} \bm{\dot{\tilde{v}}} = \bm{\tilde{v}} 
+    \frac{t_D}{t_0} \bm{\dot{\tilde{v}}} = -\bm{\tilde{v}} 
     + \sqrt{\frac{2}{\Delta \tilde{t}}}\bm{R}_G \tag{1.5} 
 \end{equation}
 
@@ -81,7 +81,7 @@
 であるので, これを$m^*$とおくと式(1.5)は
 
 \begin{equation}
-    m^* \bm{\dot{\tilde{v}}} = \bm{\tilde{v}} 
+    m^* \bm{\dot{\tilde{v}}} = -\bm{\tilde{v}} 
     + \sqrt{\frac{2}{\Delta \tilde{t}}}\bm{R}_G \tag{1.7} 
 \end{equation}
 となり, 題意に適する.
@@ -151,14 +151,21 @@
 
 \noindent
 これを用いて, 初期条件$\bm{r}=(0,0)$, $\bm{v}=(0.0)$, 時間区間$\qty[0, 100t_B]$, 時間刻み$\Delta \tilde{t}=0.01t_B$における粒子軌跡を作図した.
-その結果を
+プログラムの実行手順としては, まずデータをlangevin.pyで出力し, それをもとにproblem1.ipynbを用いてプロットした.
+作成した粒子軌跡を図1.1に示す.
 
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.6]{problem_1/1-4/problem1-4.pdf}
+    \caption{Langevin熱浴中における1粒子のブラウン運動}
+\end{figure}
+この図より, 慣性質量が大きくなるほど, 粒子軌道の範囲が狭まっていくことが分かる.
 
 
 % (5)
 \subsection{}
-
 \noindent
+(4)と同じ粒子について, 時間変化による平均二乗変位を
 
 
 % 問題2
