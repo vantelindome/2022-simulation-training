@@ -8,7 +8,7 @@
 
 #define tmax 100
 #define dt 0.01
-#define m 10.0
+#define m 0.10
 #define ensemble 10000
 #define dim 2
 //using namespace std;
@@ -29,7 +29,7 @@ void ini_clock(int *j,double *tout){
 void eom(double *v,double *x){
   int i;
   for(i=0;i<dim;i++){
-    v[i]+= (1-(dt/m))*v[i]+sqrt(2.*dt)*gaussian_rand()/m;
+    v[i] = (1-(dt/m))*v[i]+sqrt(2.*dt)*gaussian_rand()/m;
     x[i]+= v[i]*dt;
   }
 }

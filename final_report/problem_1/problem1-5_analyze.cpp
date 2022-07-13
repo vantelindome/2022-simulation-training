@@ -6,7 +6,7 @@
 #include <cfloat>
 #include "BM.h"
 
-#define m 10.0
+#define m 0.10
 #define dt 0.01
 #define ensemble 10000
 #define window 52
