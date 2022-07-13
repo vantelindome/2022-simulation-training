@@ -15,13 +15,13 @@
 #define cut 2.0
 #define polydispersity 0.0
 
-void input(double (*x)[dim], double (*a)){
+void input(double (*x)[dim], double (*v)[dim], double (*a)){
   char filename[128];
   std::ifstream file;
   sprintf(filename,"2-2/coord_T5.000_1_problem2-2.dat");
   file.open(filename);
   for(int k=0;k<Np;k++)
-    file >> x[k][0] >> x[k][1] >> a[k];
+    file >> x[k][0] >> x[k][1] >> v[k][0] >> v[k][1] >> a[k];
   file.close();
   
 }
@@ -44,8 +44,7 @@ void ini_array(double (*x)[dim]){
 }
 
 void calc_force(double (*x)[dim],double (*f)[dim],double *a){
-  double dx,dy,dr2,dUr,w2,w6,w12,cut2,wc2,wc6,wc12,aij;
-
+  double dx,dy,dr,dr2,dUr,w2,w6,w12,cut2,wc2,wc6,wc12,aij;
   ini_array(f);
 
   for(int i=0;i<Np;i++)
@@ -56,6 +55,7 @@ void calc_force(double (*x)[dim],double (*f)[dim],double *a){
           dx-=L*floor((dx+0.5*L)/L);
           dy-=L*floor((dy+0.5*L)/L);
           dr2=dx*dx+dy*dy;
+          dr=sqrt(dr2);
           	if(dr2<cut*cut){
               aij=0.5*(a[i]+a[j]);
               w2=aij*aij/dr2;
@@ -65,7 +65,7 @@ void calc_force(double (*x)[dim],double (*f)[dim],double *a){
               wc2=aij*aij/cut2;
               wc6=wc2*wc2*wc2;
               wc12=wc6*wc6;
-              dUr=-48.*w12/dr2 + 24.*w6/dr2 + 48.*wc12/cut2 - 24.*w6/cut2; // F_ij
+              dUr=-48.*w12/dr2 + 24.*w6/dr2 + 48.*wc12/(cut*dr) - 24.*w6/(cut*dr); // F_ij
               f[i][0]-=dUr*dx;
               f[j][0]+=dUr*dx;
               f[i][1]-=dUr*dy;
@@ -86,14 +86,14 @@ void eom(double (*v)[dim],double (*x)[dim],double (*f)[dim],double temp0){
 }
 
 
-void output(double (*x)[dim],double *a){
+void output(double (*x)[dim],double (*v)[dim],double *a){
   char filename[128];
   std::ofstream file;
   static int j=0;
   sprintf(filename,"./2-3/coord_T%.3f_%d_problem2-3.dat",temp,j);
   file.open(filename);
   for(int i=0;i<Np;i++)
-    file <<x[i][0]<<"\t"<<x[i][1]<<"\t"<<a[i]<<std::endl;
+    file <<x[i][0]<<"\t"<<x[i][1]<<"\t"<<v[i][0]<<"\t"<<v[i][1]<<"\t"<<a[i]<<std::endl;
   file.close();
   j++;
 }
@@ -103,8 +103,7 @@ int main(){
   double tout=0.0;
   int j=0;
   // set_diameter(a);
-  input(x,a);
-  ini_array(v);
+  input(x,v,a);
 
   while(j*dt < 100.0){
     j++;
@@ -118,7 +117,7 @@ int main(){
     eom(v,x,f,temp);
     p_boundary(x);
     if(j*dt >= tout){
-      output(x,a);
+      output(x,v,a);
       tout+=100.;
     }
   }
