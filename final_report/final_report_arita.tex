@@ -152,21 +152,40 @@
 \noindent
 これを用いて, 初期条件$\bm{r}=(0,0)$, $\bm{v}=(0.0)$, 時間区間$\qty[0, 100t_B]$, 時間刻み$\Delta \tilde{t}=0.01t_B$における粒子軌跡を作図した.
 プログラムの実行手順としては, まずデータをlangevin.pyで出力し, それをもとにproblem1.ipynbを用いてプロットした.
-作成した粒子軌跡を図1.1に示す.
+各 $m$ における粒子軌跡の時間発展をを図1に示す.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[scale=0.6]{problem_1/1-4/problem1-4.pdf}
+    \includegraphics[scale=0.4]{problem_1/1-4/problem1-4.pdf}
     \caption{Langevin熱浴中における1粒子のブラウン運動}
 \end{figure}
-この図より, 慣性質量が大きくなるほど, 粒子軌道の範囲が狭まっていくことが分かる.
+この図より, 慣性質量が大きくなるほど, 時間あたりの粒子の変位は小さくなっていることが分かる.
 
 
 % (5)
 \subsection{}
 \noindent
-(4)と同じ粒子について, 時間変化による平均二乗変位を
+10000個の粒子について(4)と同じシミュレーションを行い, 時間変化による平均二乗変位を求めた.
+プログラムの実行手順としては, まずproblem1-5 langevin.cppですべての粒子座標の時間発展を出力し, 
+それをproblem1-5 analyze.cppで解析した.
+それらのデータをもとにproblem1.ipynbを用いてプロットした.
+また(3)で求めた式(1.10)を理論式として同じグラフにプロットした.
+これらの結果を図2に示す.
 
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.4]{problem_1/1-5/problem1-5.pdf}
+    \caption{Langevin熱浴中における粒子の平均二乗変位}
+\end{figure}
+これを見ると, シミュレーションで求めた数値と理論式はよく一致している.
+
+\noindent
+この図より, 慣性質量が増加すると(4)で考察したように時間当たりの粒子の変位が
+小さくなることから, 弾性領域においては平均二乗変位が減少する. 
+拡散領域においては時間あたりの変位が小さくなり, 時間経過とともに収束していく.
+
+
+\newpage
 
 % 問題2
 \section{}
