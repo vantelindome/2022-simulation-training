@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+#include <iomanip>
 #include <iostream>
 #include <fstream>
 #include <cfloat>
@@ -8,17 +9,16 @@
 
 #define Np 1000
 #define L 50.0
-#define tmax 1500
-#define dt 0.01
-#define temp 0.2
+#define tmax 100
+#define dtmd 0.001
 #define dim 2
 #define cut 2.0
 #define polydispersity 0.0
 
-void input(double (*x)[dim], double (*v)[dim], double (*a)){
+void input(double (*x)[dim],double (*v)[dim], double (*a)){
   char filename[128];
   std::ifstream file;
-  sprintf(filename,"2-2/coord_T5.000_1_problem2-2.dat");
+  sprintf(filename,"2-3/coord_T0.200_150_problem2-3.dat");
   file.open(filename);
   for(int k=0;k<Np;k++)
     file >> x[k][0] >> x[k][1] >> v[k][0] >> v[k][1] >> a[k];
@@ -31,7 +31,7 @@ void set_diameter(double *a){
     a[i]=1.0+polydispersity*gaussian_rand();
 }
 
-void p_boundary(double (*x)[dim]){ // 境界条件
+void p_boundary(double (*x)[dim]){
   for(int i=0;i<Np;i++)
     for(int j=0;j<dim;j++)
       x[i][j]-=L*floor(x[i][j]/L);
@@ -43,9 +43,9 @@ void ini_array(double (*x)[dim]){
       x[i][j]=0.0;
 }
 
-void calc_force(double (*x)[dim],double (*f)[dim],double *a){
-  double dx,dy,dr,dr2,dUr,w2,w6,w12,cut2,wc2,wc6,wc12,aij;
-  ini_array(f);
+void calc_force(double (*x)[dim],double (*f)[dim],double *a,double *U){
+  *U=0.0;
+  double dx,dy,dr,dr2,dUr,w2,w6,w12,cut2,wc2,wc6,wc12,wc12c,wc6c,aij;
 
   for(int i=0;i<Np;i++)
     for(int j=0;j<Np;j++){
@@ -70,56 +70,61 @@ void calc_force(double (*x)[dim],double (*f)[dim],double *a){
               f[j][0]+=dUr*dx;
               f[i][1]-=dUr*dy;
               f[j][1]+=dUr*dy;
+              wc12c = wc12/cut;
+              wc6c = wc6/cut;
+              *U += 4.*(w12-w6)-4.*(wc12-wc6)-(-48.*wc12/cut+24.*wc6/cut)*(dr-cut);
             }
           }
         }
 }
 
-void eom(double (*v)[dim],double (*x)[dim],double (*f)[dim],double temp0){
-  double zeta=1.0;
-  double fluc=sqrt(2.*zeta*temp0*dt);
+
+void eom_md(double (*v)[dim],double (*x)[dim],double (*f)[dim],double *a,double *U,double dt){
   for(int i=0;i<Np;i++)
     for(int j=0;j<dim;j++){
-      v[i][j]+=-zeta*v[i][j]*dt+f[i][j]*dt+fluc*gaussian_rand();
-      x[i][j]+=v[i][j]*dt;
+      x[i][j]+=v[i][j]*dt+0.5*f[i][j]*dt*dt;
+      v[i][j]+=0.5*f[i][j]*dt;
     }
+  calc_force(x,f,a,&(*U));
+  for(int i=0;i<Np;i++)
+    for(int j=0;j<dim;j++){
+      v[i][j]+=0.5*f[i][j]*dt;
+    }
+  p_boundary(x);
 }
 
-
-void output(double (*x)[dim],double (*v)[dim],double *a){
+void output(int k,double (*v)[dim],double U){
   char filename[128];
+  double K=0.0;
+
   std::ofstream file;
-  static int j=0;
-  sprintf(filename,"./2-3/coord_T%.3f_%d_problem2-3.dat",temp,j);
-  file.open(filename);
+  sprintf(filename,"2-4/energy.dat");
+  file.open(filename,std::ios::app); //append
   for(int i=0;i<Np;i++)
-    file <<x[i][0]<<"\t"<<x[i][1]<<"\t"<<v[i][0]<<"\t"<<v[i][1]<<"\t"<<a[i]<<std::endl;
+    for(int j=0;j<dim;j++)
+      K+=0.5*v[i][j]*v[i][j];
+  
+  // std::cout<< std::setprecision(6)<<k*dtmd<<"\t"<<K/Np<<"\t"<<U/Np<<"\t"<<(K+U)/Np<<std::endl;  
+  file<< std::setprecision(6)<<k*dtmd<<"\t"<<K/Np<<"\t"<<U/Np<<"\t"<<(K+U)/Np<<std::endl;
   file.close();
-  j++;
 }
 
 int main(){
   double x[Np][dim],v[Np][dim],f[Np][dim],a[Np];
-  double tout=0.0;
+  double tout=0.0,U;
   int j=0;
-  // set_diameter(a);
+  set_diameter(a);
   input(x,v,a);
-
-  while(j*dt < 10.0){
+  ini_array(f);
+  
+  while(j*dtmd < tmax){
     j++;
-    calc_force(x,f,a);
-    eom(v,x,f,5.0);
-  }
-  j=0;
-  while(j*dt < tmax){
-    j++;
-    calc_force(x,f,a);
-    eom(v,x,f,temp);
-    p_boundary(x);
-    if(j*dt >= tout){
-      output(x,v,a);
-      tout+=10.;
+    eom_md(v,x,f,a,&U,dtmd);
+    if(j*dtmd >= tout){
+      output(j,v,U);
+      tout+=1.;
     }
   }
+  
   return 0;
 }
